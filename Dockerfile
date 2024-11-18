@@ -9,7 +9,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Instalar las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt python-multipart
 
 # Asegurarse de que uvicorn esté instalado (opcional si ya está en requirements.txt)
 RUN pip install uvicorn

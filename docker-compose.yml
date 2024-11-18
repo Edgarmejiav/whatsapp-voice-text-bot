@@ -5,26 +5,15 @@ services:
     build: .
     container_name: fastapi
     ports:
-      - "8000:80"  # Asegúrate que FastAPI escuche en el puerto 80, o cambia a 8000 si es necesario
-    volumes:
-      - .:/app
+      - "8000:80"
     environment:
       - MODULE_NAME=main
-    command: uvicorn main:app --host 0.0.0.0 --port 80
+    command: gunicorn -k uvicorn.workers.UvicornWorker --workers 4 -b 0.0.0.0:80 main:app
+    env_file:
+      - .env  # Archivo de variables de entorno para producción
     networks:
-      - fastapi-network  # Conectar a la red personalizada
-
-  ngrok:
-    image: wernight/ngrok
-    container_name: ngrok
-    environment:
-      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
-    ports:
-      - "4040:4040"  # Dashboard de ngrok
-    command: "ngrok http fastapi:80"  # Apunta al contenedor 'app' en el puerto 80
-    networks:
-      - fastapi-network  # Conectar a la misma red personalizada
+      - fastapi-network
 
 networks:
-  fastapi-network:  # Definir la red personalizada
-    driver: bridge  # La red "bridge" es la predeterminada en Docker, útil para contenedores en la misma máquina
+  fastapi-network:
+    driver: bridge
