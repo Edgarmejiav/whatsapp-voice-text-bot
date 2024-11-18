@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:80"  # Asegúrate que FastAPI escuche en el puerto 80, o cambia a 8000
+    volumes:
+      - .:/app
+    environment:
+      - MODULE_NAME=main
+    command: uvicorn main:app --host 0.0.0.0 --port 80  # O ajusta el puerto según tu configuración
+
+  ngrok:
+    image: wernight/ngrok
+    container_name: ngrok
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}  # Reemplazar por variable de entorno para mayor seguridad
+      - NGROK_PORT=8000
+    ports:
+      - "4040:4040"  # Dashboard de ngrok
+    command: "ngrok http 0.0.0.0:8000"  # Cambiar al puerto 8000 de la aplicación FastAPI si es necesario

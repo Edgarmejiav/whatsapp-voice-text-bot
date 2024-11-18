@@ -1,8 +1,9 @@
 speechrecognition
 pydub
 langdetect
-fastapi
 twilio
 python-dotenv
 pydantic
 ffmpeg-python
+fastapi
+uvicorn
