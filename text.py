@@ -4,14 +4,12 @@ import speech_recognition as sr
 from pydub import AudioSegment
 from langdetect import detect
 import os
-
-AudioSegment.ffmpeg = which("ffmpeg")
-
 from pydub import AudioSegment
 from pydub.utils import which
 
 # Asegúrate de que ffmpeg esté en el PATH
 AudioSegment.ffmpeg = which("ffmpeg")
+
 
 def convert_to_wav(input_file):
     try:
@@ -82,6 +80,7 @@ def recognize_speech(input_file):
                 print("Archivo WAV temporal eliminado.")
     else:
         return ""
+
 
 # convert_to_wav("51949638354_20241117_213802.mpeg")
 print(recognize_speech("51949638354_20241117_213802.mpeg"))
