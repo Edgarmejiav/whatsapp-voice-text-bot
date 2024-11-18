@@ -1,7 +1,4 @@
-from shutil import which
-
 import speech_recognition as sr
-from pydub import AudioSegment
 from langdetect import detect
 import os
 from pydub import AudioSegment
@@ -83,4 +80,4 @@ def recognize_speech(input_file):
 
 
 # convert_to_wav("51949638354_20241117_213802.mpeg")
-print(recognize_speech("51949638354_20241117_213802.mpeg"))
+# print(recognize_speech(""))

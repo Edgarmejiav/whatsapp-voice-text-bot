@@ -1,10 +1,8 @@
 from fastapi import FastAPI, Request
 from twilio.rest import Client
 from dotenv import load_dotenv
-from pydantic import BaseModel
 from requests.auth import HTTPBasicAuth
 import logging
-
 import requests
 import os
 import re
@@ -17,6 +15,12 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 load_dotenv()
+recognize_speech("lega.ogg")
+try:
+    import multipart
+    print("python-multipart is installed")
+except ImportError:
+    print("python-multipart is NOT installed")
 
 account_sid = os.getenv("TWILIO_ACCOUNT_SID")
 auth_token = os.getenv("TWILIO_AUTH_TOKEN")
