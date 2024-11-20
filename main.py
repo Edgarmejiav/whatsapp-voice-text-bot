@@ -9,6 +9,7 @@ import re
 from datetime import datetime
 
 from text import recognize_speech
+from utils import split_message
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -80,11 +81,14 @@ async def process_received_message(request: Request) -> dict:
 @app.post("/")
 async def receive_sms(request: Request):
     body =  await process_received_message(request)
-    client.messages.create(
-        body=body,
-        from_=twilio_number,
-        to='whatsapp:+51949638354'
-    )
+    # // crea
+    parts  = split_message(body)
+    for body_part in parts:
+        client.messages.create(
+            body=body_part,
+            from_=twilio_number,
+            to='whatsapp:+51949638354'
+        )
     return {"message": "SMS processed"}
 @app.post("/send_sms")
 def send_sms():
